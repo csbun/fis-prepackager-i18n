@@ -1,6 +1,6 @@
 {
   "name": "scrat-preprocessor-i18n",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A i18n preprocessor for fis",
   "main": "index.js",
   "scripts": {

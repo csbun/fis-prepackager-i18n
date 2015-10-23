@@ -43,10 +43,7 @@ module.exports = function (content, file, conf) {
     var i18nData = getI18nData(file, conf);
     // 渲染 ejs 数据
     try {
-        content = ejs.render(content, i18nData, {
-            cache: true,
-            filename: file.realpath
-        });
+        content = ejs.render(content, i18nData);
     } catch (e) {
         wrapError(e);
     }
