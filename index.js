@@ -2,50 +2,49 @@
 
 var fs = require('fs');
 var path = require('path');
-var ejs = require('ejs');
 
-var PROJECT_DIR = fis.project.getProjectPath();
+var buildComponents = require('./src/build-components');
+var i18n = require('./src/i18n');
 
-/**
- * 读取 i18n 数据
- * @return {Object}      i18n 数据
- */
-var getI18nData = function (file, conf) {
-    var I18N = conf.i18n || 'i18n';
-    var I18N_FOLDER = conf.folder || 'i18n';
-    var I18N_FILE_PATH = path.join(PROJECT_DIR, I18N_FOLDER, I18N + '.json');
-    try {
-        file.cache.addDeps(I18N_FILE_PATH);
-        return JSON.parse(fs.readFileSync(I18N_FILE_PATH, 'utf8'));
-    } catch (e) {
-        console.error(e.message);
-        return {};
-    }
-};
 
-/**
- * 将错误信息输出为 html 片段
- * @param  {Error} err 错误信息
- * @return {string}    html 片段
- */
-var wrapError = function (err) {
-    var html = '<div style="color:red">';
-    html += '<h2>' + (err.message || err) + '</h2>';
-    if(err.stack){
-        html += '<pre>' + err.stack + '</pre>';
-    }
-    html += '</div>';
-    return html;
-};
+module.exports = function (ret, conf, settings, opt) {
 
-module.exports = function (content, file, conf) {
-    // 读取 i18n 数据
-    var i18nData = getI18nData(file, conf);
-    // 渲染 ejs 数据
-    try {
-        content = ejs.render(content, i18nData);
-    } catch (e) {
-        wrapError(e);
-    }
-    return content;
+    var EXT = '.json';
+    var I18N_FOLDER = fis.project.getProjectPath(settings.folder || 'i18n');
+    var DEFAULT_I18N = settings.defaultI18n || 'default';
+    var CONNECTOR = settings.connector || '_';
+
+    // 读取文件夹中的 i18n
+    var i18nArr = fs.readdirSync(I18N_FOLDER).filter(function (f) {
+        // 只要 .json 文件
+        return path.extname(f) === EXT;
+    }).map(function (f) {
+        // 读取 i18n 的 josn 内容
+        var i18n = path.basename(f, EXT);
+        var i18nFilePath = path.join(I18N_FOLDER, f);
+        var out = {
+            i18n: i18n,
+            file: i18nFilePath,
+            connector: CONNECTOR,
+            isDefault: i18n === DEFAULT_I18N
+        };
+        try {
+            out.data = JSON.parse(fs.readFileSync(i18nFilePath, 'utf8'));
+        } catch (e) {
+            out.data = {};
+            console.log(e);
+        }
+        return out;
+    });
+
+    // 检索全部文件
+    fis.util.map(ret.src, function (subpath, file) {
+        if (file.isLayout && file.isHtmlLike) {
+            // 处理入口 html
+            // 组装 components
+            buildComponents(file, ret, settings, opt);
+            // 产生多个语言的文件
+            i18n(file, i18nArr, ret);
+        }
+    });
 };

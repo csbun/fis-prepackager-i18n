@@ -1,7 +1,7 @@
 {
-  "name": "scrat-preprocessor-i18n",
-  "version": "0.0.2",
-  "description": "A i18n preprocessor for fis",
+  "name": "fis-prepackager-i18n",
+  "version": "0.1.0",
+  "description": "A i18n prepackager for fis",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,16 +14,16 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/csbun/scrat-preprocessor-i18n.git"
+    "url": "git+https://github.com/csbun/fis-prepackager-i18n.git"
   },
   "keywords": [
     "scrat",
     "fis",
-    "preprocessor",
+    "prepackager",
     "i18n"
   ],
   "bugs": {
-    "url": "https://github.com/csbun/scrat-preprocessor-i18n/issues"
+    "url": "https://github.com/csbun/fis-prepackager-i18n/issues"
   },
-  "homepage": "https://github.com/csbun/scrat-preprocessor-i18n#readme"
+  "homepage": "https://github.com/csbun/fis-prepackager-i18n#readme"
 }
