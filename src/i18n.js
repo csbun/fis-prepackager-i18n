@@ -4,7 +4,6 @@ var path = require('path');
 var ejs = require('ejs');
 var wrapError = require('./wrap-error');
 
-
 /**
  * 生成 i18n 文件路径
  * @param  {string} filePath      源文件路径
@@ -54,9 +53,6 @@ module.exports = function (file, i18nArr, fisRet) {
 
         // 复制 release 属性
         fileWithI18n.release = getI18nFilePath(file.release, i18nObj);
-        if (file.hasOwnProperty('packRelease')) {
-            fileWithI18n.packRelease = getI18nFilePath(file.packRelease, i18nObj);
-        }
         // 加入打包目录中
         fisRet.pkg[fileWithI18n.subpath] = fileWithI18n;
     });
