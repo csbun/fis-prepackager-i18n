@@ -12,7 +12,12 @@ var wrapError = require('./wrap-error');
  */
 function getI18nFilePath (filePath, i18nObj) {
     if (typeof filePath === 'string') {
-        var pathObj = path.parse(filePath);
+        var pathObj = {
+            dir: path.dirname(filePath),
+            ext: path.extname(filePath),
+        };
+        pathObj.name = path.basename(filePath, pathObj.ext);
+        // var pathObj = path.parse(filePath);
         return path.join(pathObj.dir, pathObj.name + i18nObj.connector + i18nObj.i18n + pathObj.ext)
                     .replace(/\\/g, '/');
     } else {
@@ -49,6 +54,7 @@ module.exports = function (file, i18nArr, fisRet) {
         }
         // 生成新的文件
         var fileWithI18n = fis.file(getI18nFilePath(file.fullname, i18nObj));
+        console.log(fileWithI18n);
         fileWithI18n.setContent(content);
 
         // 复制 release 属性
