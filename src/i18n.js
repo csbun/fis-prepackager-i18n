@@ -54,7 +54,6 @@ module.exports = function (file, i18nArr, fisRet) {
         }
         // 生成新的文件
         var fileWithI18n = fis.file(getI18nFilePath(file.fullname, i18nObj));
-        console.log(fileWithI18n);
         fileWithI18n.setContent(content);
 
         // 复制 release 属性
