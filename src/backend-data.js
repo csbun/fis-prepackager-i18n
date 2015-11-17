@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('./util');
+
 /**
  * 替换成 play 参数
  */
@@ -11,11 +13,7 @@ function replacerPlayArg (bd) {
  * 替换成 backend-data.json 的内容
  */
 function replacerData(bd) {
-    if (typeof bd.data === 'string') {
-        return bd.data;
-    } else {
-        return JSON.stringify(bd.data, null, 4);
-    }
+    return util.isString(bd.data) ? bd.data : JSON.stringify(bd.data, null, 4);
 }
 
 module.exports = function (file, fisOpt) {

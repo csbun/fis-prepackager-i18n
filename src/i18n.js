@@ -3,6 +3,7 @@
 var path = require('path');
 var ejs = require('ejs');
 var wrapError = require('./wrap-error');
+var util = require('./util');
 
 /**
  * 生成 i18n 文件路径
@@ -11,7 +12,7 @@ var wrapError = require('./wrap-error');
  * @return {string}               新的文件路径
  */
 function getI18nFilePath (filePath, i18nObj) {
-    if (typeof filePath === 'string') {
+    if (util.isString(filePath)) {
         var pathObj = {
             dir: path.dirname(filePath),
             ext: path.extname(filePath),
