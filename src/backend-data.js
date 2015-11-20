@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var util = require('./util');
 
 /**
@@ -27,7 +28,7 @@ module.exports = function (file, fisOpt) {
 
     try {
         // 强制删除 require(backend-data.js) 的 cache
-        var backendDataFile = file.dirname + '/backend-data.js';
+        var backendDataFile = path.join(file.dirname, 'backend-data.js');
         if (require.cache[backendDataFile]) {
             delete require.cache[backendDataFile];
         }

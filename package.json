@@ -1,6 +1,6 @@
 {
   "name": "fis-prepackager-i18n",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A i18n prepackager for fis",
   "main": "index.js",
   "scripts": {
