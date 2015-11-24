@@ -59,6 +59,8 @@ module.exports = function (file, i18nArr, fisRet) {
 
         // 复制 release 属性
         fileWithI18n.release = getI18nFilePath(file.release, i18nObj);
+        fileWithI18n.useHash = file.useHash;
+        fileWithI18n.rExt = file.rExt;
         // 加入打包目录中
         fisRet.pkg[fileWithI18n.subpath] = fileWithI18n;
     });
