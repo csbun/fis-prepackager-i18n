@@ -3,6 +3,7 @@
 var STRING = exports.STRING = 'string';
 exports.ARRAY = 'array';
 exports.OBJECT = 'object';
+exports.FUNCTION = 'function';
 
 /**
  * 获取对象的类型
@@ -10,7 +11,9 @@ exports.OBJECT = 'object';
  */
 var getType = exports.getType = function (obj) {
     var type;
-    if (obj == null) {
+    if (obj === undefined) {
+        type = 'undefined';
+    } else if (obj == null) {
         type = String(obj);
     } else {
         type = Object.prototype.toString.call(obj).toLowerCase();

@@ -4,6 +4,7 @@ var UNIT_REG = /\{\{\{unit(?=\s)([^}]+)\}\}\}/g;
 var UNIT_NAME_REG = /\sname\s*=\s*"([^"]+)"/;
 var UNIT_DATA_REG = /\sdata\s*=\s*"([^"]+)"/;
 
+var util = require('./util');
 var wrapError = require('./wrap-error');
 var backendData = require('./backend-data');
 
@@ -43,7 +44,16 @@ module.exports = function (file, fisRet, fisSetting, fisOpt) {
     file.setContent(content);
 
     // 替换 BACKEND_DATA
-    backendData(file, fisOpt);
+    // scart 中直接使用 -p 参数表示打包
+    var isPack = fisOpt.pack;
+    // fis3 中使用 media === 'prod' 表示生产模式
+    if (util.getType(fis.media) === util.FUNCTION) {
+        var media = fis.media() || {};
+        if (media._media === 'prod') {
+            isPack = true;
+        }
+    }
+    backendData(file, isPack);
     
     // 文件更新到 release 目录
     fisOpt.beforeCompile(file);

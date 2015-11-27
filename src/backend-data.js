@@ -17,12 +17,12 @@ function replacerData(bd) {
     return util.isString(bd.data) ? bd.data : JSON.stringify(bd.data, null, 4);
 }
 
-module.exports = function (file, fisOpt) {
+module.exports = function (file, isPack) {
     var backendArgs = [];
     var content = file.getContent();
 
-    // 如果 -p 打包，则转义 play 特殊字符
-    if (fisOpt.pack) {
+    // 如果打包，则转义 play 特殊字符
+    if (isPack) {
         content = content.replace(/(`|~|@\{|\$\{|%\{)/g, '~$1');
     }
 
@@ -34,9 +34,9 @@ module.exports = function (file, fisOpt) {
         }
         // 监听文件变化依赖
         file.cache.addDeps(backendDataFile);
-        // 如果 -p 打包，则替换成 play 参数
+        // 如果打包，则替换成 play 参数
         // 否则替换成 backend-data.json 的内容
-        var replacer = fisOpt.pack ? replacerPlayArg : replacerData;
+        var replacer = isPack ? replacerPlayArg : replacerData;
         // 遍历，替换
         require(backendDataFile).map(function (bd) {
             backendArgs.push('String ' + bd.name);
@@ -45,8 +45,8 @@ module.exports = function (file, fisOpt) {
                 return replacer(bd);
             });
         });
-        // 如果 -p 打包，添加全部 play 参数
-        if (fisOpt.pack && backendArgs.length) {
+        // 如果打包，添加全部 play 参数
+        if (isPack && backendArgs.length) {
             content = '`args ' + backendArgs.join(', ') + '\n' + content;
         }
     } catch (e) {

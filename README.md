@@ -41,19 +41,41 @@ fis.config.set('settings.prepackager.i18n', {
     defaultI18n: 'en',
     connector: '_'
 });
+```
+
+#### fis2
+
+```javascript
 fis.config.set('modules.prepackager', 'i18n');
 fis.config.set('roadmap.path', [
     {
-        // source js
+        // source html
         reg: 'views/**/*.html',
         // `isLayout` should be `TRUE`
         isLayout: true
     },
     {
-        // other js `isLayout` != `TRUE`
+        // other html `isLayout` != `TRUE`
         reg: '**/*.html'
     }
 ]);
+```
+
+#### fis3
+
+```javascript
+fis.match('*.html', {
+    release: '$0'
+    // other html `isLayout` != `TRUE`
+});
+fis.match('views/**/*.html', {
+    release: '$0',
+    // `isLayout` should be `TRUE`
+    isLayout: true
+});
+fis.match('::package', {
+    prepackager: fis.plugin('i18n')
+});
 ```
 
 ## Example
