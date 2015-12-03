@@ -23,7 +23,7 @@ module.exports = function (file, isPack) {
 
     // 如果打包，则转义 play 特殊字符
     if (isPack) {
-        content = content.replace(/(`|~|@\{|\$\{|%\{)/g, '~$1');
+        content = content.replace(/(`|~|@\{|\$\{|\$"|%\{)/g, '~$1');
     }
 
     try {
