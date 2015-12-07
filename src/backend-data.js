@@ -18,6 +18,9 @@ function replacerData(bd) {
 }
 
 module.exports = function (file, isPack) {
+    if(file.ignoreBackendData){
+		return;
+    }
     var backendArgs = [];
     var content = file.getContent();
 
