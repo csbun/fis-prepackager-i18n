@@ -18,9 +18,11 @@ function replacerData(bd) {
 }
 
 module.exports = function (file, isPack) {
-    if(file.ignoreBackendData){
-		return;
+    // roadmap 中配置忽略 BackendData 则跳出
+    if (file.ignoreBackendData) {
+        return;
     }
+
     var backendArgs = [];
     var content = file.getContent();
 
