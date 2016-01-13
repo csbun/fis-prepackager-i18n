@@ -30,7 +30,7 @@ function getI18nFilePath (filePath, i18nObj) {
 /**
  * 产生多个语言的文件
  */
-module.exports = function (file, i18nArr, fisRet) {
+module.exports = function (file, i18nArr, fisRet, settings) {
 
     var defaultI18nContent;
 
@@ -42,7 +42,7 @@ module.exports = function (file, i18nArr, fisRet) {
             // 监听依赖
             file.cache.addDeps(i18nObj.file);
             // 用 ejs 渲染
-            content = ejs.render(file.getContent(), i18nObj.data);
+            content = ejs.render(file.getContent(), i18nObj.data, settings.ejs);
         } catch (e) {
             content = wrapError(e);
             if (!/<body>/.test(content)) {

@@ -19,7 +19,7 @@ module.exports = function (ret, conf, settings, opt) {
             // 组装 components
             buildComponents(file, ret, settings, opt);
             // 产生多个语言的文件
-            i18n(file, i18nArr, ret);
+            i18n(file, i18nArr, ret, settings);
         }
     });
 

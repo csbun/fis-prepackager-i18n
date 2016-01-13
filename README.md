@@ -39,7 +39,11 @@ src
 fis.config.set('settings.prepackager.i18n', {
     folder: 'i18n-folder-name',
     defaultI18n: 'en',
-    connector: '_'
+    connector: '_',
+    // You can use all [Ejs Options](https://www.npmjs.com/package/ejs#options) here.
+    ejs: {
+        delimiter: '%'
+    }
 });
 ```
 
