@@ -4,6 +4,7 @@ var UNIT_REG = /\{\{\{unit(?=\s)([^}]+)\}\}\}/g;
 var UNIT_NAME_REG = /\sname\s*=\s*"([^"]+)"/;
 var UNIT_DATA_REG = /\sdata\s*=\s*"([^"]+)"/;
 
+var path = require('path');
 var util = require('./util');
 var wrapError = require('./wrap-error');
 var backendData = require('./backend-data');
@@ -29,7 +30,8 @@ module.exports = function (file, fisRet, fisSetting, fisOpt) {
             });
             if (name) {
                 // 找到组件
-                var cmpFilePath = '/components/' + name + '/' + name + '.html';
+                var cmpFilePath = path.join(file.subdirname, '../../', '/components/' + name + '/' + name + '.html');
+                console.log(cmpFilePath);
                 var cmpFile = fisRet.src[cmpFilePath];
                 if (cmpFile) {
                     m = cmpFile.getContent();
