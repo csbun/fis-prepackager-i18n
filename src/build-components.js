@@ -30,7 +30,8 @@ module.exports = function (file, fisRet, fisSetting, fisOpt) {
             });
             if (name) {
                 // 找到组件
-                var cmpFilePath = path.join(file.subdirname, '../../', '/components/' + name + '/' + name + '.html');
+                var cmpFilePath = path.join(file.subdirname, '../../', '/components/' + name + '/' + name + '.html')
+                                      .replace(/\\/g, '/');
                 var cmpFile = fisRet.src[cmpFilePath];
                 if (cmpFile) {
                     m = cmpFile.getContent();
